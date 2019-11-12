@@ -18,6 +18,7 @@
     "opusscript": "0.0.3",
     "plex-api": "^5.1.0",
     "request": "^2.81.0",
-    "uws": "^8.14.1"
+    "uws": "^8.14.1",
+    "better-sqlite3": "^5.4.3"
   }
 }
