@@ -1,11 +1,11 @@
 module.exports = function(client) {
   // plex commands -------------------------------------------------------------
-  var plexCommands = require('../commands/plex');
-  var keys = require('../config/plex');
+  var plexCommands = require('../commands/plex.js');
+  var keys = require('../config/keys.js');
 
   // Database for individual server settings as well as saving bot changes. This can be used later for even more advanced customizations like mod roles, log channels, etc.
   const SQLite = require("better-sqlite3");
-  const sql = new SQLite('../config/database.sqlite');
+  const sql = new SQLite('./config/database.sqlite');
 
   // when bot is ready
   client.on('ready', async message => {
@@ -54,7 +54,7 @@ module.exports = function(client) {
       var args = message.content.slice(prefix.length).trim().split(/ +/g);
       var command = args.shift().toLowerCase();
 
-      var cmdTxt = msg.split(" ")[0].substring("-".length, msg.length);
+      var cmdTxt = msg.split(" ")[0].substring(prefix.length, msg.length);
       var query = msg.substring(msg.indexOf(' ')+1);
       var cmd = plexCommands[cmdTxt];
 
@@ -79,7 +79,7 @@ module.exports = function(client) {
               return message.channel.send('You do not have permissions to use `' + prefix + 'bot prefix` in <#' + message.channel.id + '>!');
             }
           } else {
-            return message.channel.send("The current prefix is `" + guildSettings.prefix + "`\nTo change it type: `" + guildSettings.prefix + "bot prefix <" + keys.defaultPrefix + ">` (where *<" + keys.defaultPrefix + ">* is the prefix)");
+            return message.channel.send("The current prefix is `" + guildSettings.prefix + "`\nTo change it type: `" + guildSettings.prefix + "bot prefix <" + keys.defaultPrefix + ">` (where **<" + keys.defaultPrefix + ">** is the prefix)");
           }
         }
         else if (command === "help") {
