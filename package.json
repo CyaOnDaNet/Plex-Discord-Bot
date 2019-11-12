@@ -10,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "bufferutil": "^4.0.1",
-    "discord.js": "^11.5.1",
     "erlpack": "^0.1.3",
     "ffmpeg-static": "^2.7.0",
     "libsodium-wrappers": "^0.7.6",
@@ -18,6 +17,11 @@
     "opusscript": "^0.0.7",
     "plex-api": "^5.2.5",
     "request": "^2.88.0",
+    "discord.js": "^11.5.1",
     "better-sqlite3": "^5.4.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danxfisher/Plex-Discord-Bot"
   }
 }
