@@ -18,9 +18,7 @@
 6. Take all of the information from the page and enter it into the `config/keys.js` file, replacing the placeholders.
 7. Navigate to the `config/plex.js` file and replace the placeholders with your Plex Server information
     1. To get your token, following the instructions here: https://support.plex.tv/hc/en-us/articles/204059436-Finding-an-authentication-token-X-Plex-Token
-    2. To get your machineId or "machineIdentifier", follow the instructions here: https://support.plex.tv/hc/en-us/articles/201638786-Plex-Media-Server-URL-Commands
-        * In the first example under "Base Server Capabilities", you can see the information returned when you type `http://[PMS_IP_Address]:32400/?X-Plex-Token=YourTokenGoesHere` into your address bar of a web browser.  Copy everything between the quotes for the parameter "machineIdentifier" and paste it into the "machineId" property in `config/plex.js`
-    3. The identifier, product, version, and deviceName can be anything you want
+    2. The identifier, product, version, and deviceName can be anything you want
 8. Once you have the configs set up correctly, you'll need to authorize your bot on a server you have administrative access to.  For documentation, you can read: https://discordapp.com/developers/docs/topics/oauth2#bots.  The steps are as follows:
     1. Go to `https://discordapp.com/api/oauth2/authorize?client_id=[CLIENT_ID]&scope=bot&permissions=1` where [CLIENT_ID] is the Discord App Client ID
     2. Select **Add a bot to a server** and select the server to add it to
@@ -53,6 +51,7 @@ If I am missing any steps, feel free to reach out or open  an issue/bug in the I
 * `!skip` : skips the current song if one is playing and plays the next song in queue if it exists
 * `!stop` : stops song if one is playing
 * `!viewqueue` : displays current song queue
+* `!bot prefix <prefix>` : changes the bot prefix for the guild
 
 ***
 ## Customization
@@ -61,10 +60,8 @@ Update the `config\keys.js` file with your information:
 
 ```javascript
 module.exports = {
-  'clientId'      : 'DISCORD_CLIENT_ID',
-  'clientSecret'  : 'DISCORD_CLIENT_SECRET',
-  'username'      : 'DISCORD_BOT_USERNAME',
   'botToken'      : 'DISCORD_BOT_TOKEN',
+  'defaultPrefix' : '!'
 };
 ```
 
@@ -73,17 +70,15 @@ And update the `config\plex.js` file with your Plex information:
 ```javascript
 module.exports= {
   'hostname'    : 'PLEX_LOCAL_IP',
-  'port'        : 'PLEX_LOCAL_PORT'
+  'port'        : 'PLEX_LOCAL_PORT',
   'username'    : 'PLEX_USERNAME',
   'password'    : 'PLEX_PASSWORD',
   'token'       : 'PLEX_TOKEN',
-  'machineId'   : 'PLEX_MACHINEID',
-  'managedUser' : 'PLEX_MANAGED_USERNAME',
   'options'     : {
-    'identifier': 'APP_IDENTIFIER',
-    'product'   : 'APP_PRODUCT_NAME',
-    'version'   : 'APP_VERSION_NUMBER',
-    'deviceName': 'APP_DEVICE_NAME',
+    'identifier': 'Plex-Discord-Bot',
+    'product'   : 'Node.js App',
+    'version'   : '1.0.0',
+    'deviceName': 'Node.js App',
     'platform'  : 'Discord',
     'device'    : 'Discord'
   }
