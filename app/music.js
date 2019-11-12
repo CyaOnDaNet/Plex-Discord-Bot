@@ -84,10 +84,107 @@ module.exports = function(client) {
         }
         else if (command === "help") {
           // Help message for bot settings goes here
+          const help = {
+            "title": "The following are available for the command " + prefix + "bot <command>",
+            "description": "\n\u200b",
+            "color": 4025171,
+            "timestamp": new Date(),
+            "footer": {
+              "icon_url": client.user.avatarURL,
+              "text": "Fetched"
+            },
+            "thumbnail": {
+              "url": client.user.avatarURL
+            },
+            "author": {
+              "name": client.user.username,
+              "icon_url": client.user.avatarURL
+            },
+            "fields": [
+              {
+                "name": prefix + "bot prefix <prefix> :",
+                "value": "changes the bot prefix for the guild"
+              }
+            ]
+          }
+
+          return message.channel.send({ embed: help });
+        }
+        else {
+          return message.channel.send("**Command not recognized!** Type `" + prefix + "bot help` for a list of bot settings.");
         }
       }
       else if (command === "help") {
         // Help message for available bot commands goes here
+        const help = {
+          "title": "The following commands are available for this bot:",
+          "description": "\n\u200b",
+          "color": 4025171,
+          "timestamp": new Date(),
+          "footer": {
+            "icon_url": client.user.avatarURL,
+            "text": "Fetched"
+          },
+          "thumbnail": {
+            "url": client.user.avatarURL
+          },
+          "author": {
+            "name": client.user.username,
+            "icon_url": client.user.avatarURL
+          },
+          "fields": [
+            {
+              "name": prefix + "plexTest :",
+              "value": "a test to see make sure your Plex server is connected properly"
+            },
+            {
+              "name": prefix + "clearqueue : ",
+              "value": "clears all songs in queue"
+            },
+            {
+              "name": prefix + "nextpage :",
+              "value": "get next page of songs if desired song is not listed"
+            },
+            {
+              "name": prefix + "pause : ",
+              "value": "pauses current song if one is playing"
+            },
+            {
+              "name": prefix + "play <song title or artist> :",
+              "value": "bot will join voice channel and play song if one song available. if more than one, bot will return a list to choose from"
+            },
+            {
+              "name": prefix + "playsong <song number> : ",
+              "value": "plays a song from the generated song list"
+            },
+            {
+              "name": prefix + "removesong <song queue number> :",
+              "value": "removes song by index from the song queue"
+            },
+            {
+              "name": prefix + "resume :",
+              "value": "resumes song if previously paused"
+            },
+            {
+              "name": prefix + "skip :",
+              "value": "skips the current song if one is playing and plays the next song in queue if it exists"
+            },
+            {
+              "name": prefix + "stop :",
+              "value": "stops song if one is playing"
+            },
+            {
+              "name": prefix + "viewqueue :",
+              "value": "displays current song queue"
+            },
+            {
+              "name": prefix + "bot prefix <prefix> :",
+              "value": "changes the bot prefix for the guild"
+            }
+          ]
+        }
+
+        return message.channel.send({ embed: help });
       }
       else if (cmd){
         try {
@@ -98,7 +195,7 @@ module.exports = function(client) {
         }
       }
       else {
-        message.reply('**Sorry, that\'s not a command.**');
+        return message.channel.send('I\'m sorry **' + message.author.username + '**, that\'s not a command!\nIf you need help, please type `' + prefix + "help` for a list of available commands.");
       }
     }
   });
