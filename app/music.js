@@ -8,7 +8,7 @@ module.exports = function(client) {
   const sql = new SQLite('../config/database.sqlite');
 
   // when bot is ready
-  client.on('ready', function() {
+  client.on('ready', async message => {
     console.log('bot ready');
     console.log('logged in as: ' + client.user.tag);
     client.user.setActivity('| ' + keys.defaultPrefix, { type: 'LISTENING' });
