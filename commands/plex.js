@@ -15,7 +15,7 @@ var plex = new PlexAPI({
   password: plexConfig.password,
   token: plexConfig.token,
   options: {
-    identifier: 'PlexBot',
+    identifier: plexConfig.options.identifier,
     product: plexConfig.options.identifier,
     version: plexConfig.options.version,
     deviceName: plexConfig.options.deviceName,

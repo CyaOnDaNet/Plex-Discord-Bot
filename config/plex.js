@@ -4,13 +4,11 @@ module.exports = {
   'username'    : 'PLEX_USERNAME',
   'password'    : 'PLEX_PASSWORD',
   'token'       : 'PLEX_TOKEN',
-  'machineId'   : 'PLEX_MACHINEID',
-  'managedUser' : 'PLEX_MANAGED_USERNAME',
   'options'     : {
-    'identifier': 'APP_IDENTIFIER',
-    'product'   : 'APP_PRODUCT_NAME',
-    'version'   : 'APP_VERSION_NUMBER',
-    'deviceName': 'APP_DEVICE_NAME',
+    'identifier': 'Plex-Discord-Bot',
+    'product'   : 'Node.js App',
+    'version'   : '1.0.0',
+    'deviceName': 'Node.js App',
     'platform'  : 'Discord',
     'device'    : 'Discord'
   }
