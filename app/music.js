@@ -11,7 +11,7 @@ module.exports = function(client) {
   client.on('ready', async message => {
     console.log('bot ready');
     console.log('logged in as: ' + client.user.tag);
-    client.user.setActivity('| ' + keys.defaultPrefix, { type: 'LISTENING' });
+    client.user.setActivity('music | ' + keys.defaultPrefix + 'help', { type: 'PLAYING' });
 
     // Check if the table "guildSettings" exists.
     const tableGuildSettings = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'guildSettings';").get();
