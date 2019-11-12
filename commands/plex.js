@@ -45,7 +45,7 @@ var conn = null;
 // plex functions ------------------------------------------------------------
 
 // find song when provided with query string, offset, pagesize, and message
-function findSong(query, offset, pageSize, message) {
+function findSong(query, offset, pageSize, message, prefix) {
   plex.query('/search/?type=10&query=' + query + '&X-Plex-Container-Start=' + offset + '&X-Plex-Container-Size=' + pageSize).then(function(res) {
     tracks = res.MediaContainer.Metadata;
 
@@ -59,7 +59,7 @@ function findSong(query, offset, pageSize, message) {
     if (resultSize == 1 && offset == 0) {
       songKey = 0;
       // add song to queue
-      addToQueue(songKey, tracks, message);
+      addToQueue(songKey, tracks, message, prefix);
     }
     else if (resultSize > 1) {
       for (var t = 0; t < tracks.length; t++) {
@@ -71,8 +71,8 @@ function findSong(query, offset, pageSize, message) {
         }
         messageLines += (t+1) + ' - ' + artist + ' - ' + tracks[t].title + '\n';
       }
-      messageLines += '\n***!playsong (number)** to play your song.*';
-      messageLines += '\n***!nextpage** if the song you want isn\'t listed*';
+      messageLines += '\n***' + prefix + 'playsong (number)** to play your song.*';
+      messageLines += '\n***' + prefix + 'nextpage** if the song you want isn\'t listed*';
       message.reply(messageLines);
     }
     else {
@@ -84,7 +84,7 @@ function findSong(query, offset, pageSize, message) {
 }
 
 // not sure if ill need this
-function addToQueue(songNumber, tracks, message) {
+function addToQueue(songNumber, tracks, message, prefix) {
   if (songNumber > -1){
     var key = tracks[songNumber].Media[0].Part[0].key;
     var artist = '';
@@ -98,7 +98,7 @@ function addToQueue(songNumber, tracks, message) {
 
     songQueue.push({'artist' : artist, 'title': title, 'key': key});
     if (songQueue.length > 1) {
-      message.reply('You have added **' + artist + ' - ' + title + '** to the queue.\n\n***!viewqueue** to view the queue.*');
+      message.reply('You have added **' + artist + ' - ' + title + '** to the queue.\n\n***' + prefix + 'viewqueue** to view the queue.*');
     }
 
     if (!isPlaying) {
@@ -204,8 +204,8 @@ var commands = {
   'nextpage' : {
     usage: '',
     description: 'get next page of songs if desired song not listed',
-    process: function(client, message, query) {
-      findSong(plexQuery, plexOffset, plexPageSize, message);
+    process: function(client, message, query, prefix) {
+      findSong(plexQuery, plexOffset, plexPageSize, message, prefix);
     }
   },
   'pause' : {
@@ -231,13 +231,13 @@ var commands = {
   'play' : {
     usage: '<song title or artist>',
     description: 'bot will join voice channel and play song if one song available.  if more than one, bot will return a list to choose from',
-    process: function(client, message, query) {
+    process: function(client, message, query, prefix) {
       // if song request exists
       if (query.length > 0) {
         plexOffset = 0; // reset paging
         plexQuery = null; // reset query for !nextpage
 
-        findSong(query, plexOffset, plexPageSize, message);
+        findSong(query, plexOffset, plexPageSize, message, prefix);
       }
       else {
         message.reply('**Please enter a song title**');
@@ -247,12 +247,12 @@ var commands = {
   'playsong' : {
     usage: '<song number>',
     description: 'play a song from the generated song list',
-    process: function(client, message, query) {
+    process: function(client, message, query, prefix) {
       var songNumber = query;
       songNumber = parseInt(songNumber);
       songNumber = songNumber - 1;
 
-      addToQueue(songNumber, tracks, message);
+      addToQueue(songNumber, tracks, message, prefix);
     }
   },
   'removesong' : {
@@ -336,7 +336,7 @@ var commands = {
   'viewqueue' : {
     usage: '',
     description: 'displays current song queue',
-    process: function(client, message) {
+    process: function(client, message, prefix) {
       //var messageLines = '\n**Song Queue:**\n\n';
 
       var messageLines = '';
@@ -346,8 +346,8 @@ var commands = {
           messageLines += (t+1) + ' - ' + songQueue[t].artist + ' - ' + songQueue[t].title + '\n';
         }
 
-        messageLines += '\n***!removesong (number)** to remove a song*';
-        messageLines += '\n***!skip** to skip the current song*';
+        messageLines += '\n***' + prefix + 'removesong (number)** to remove a song*';
+        messageLines += '\n***' + prefix + 'skip** to skip the current song*';
 
         var embedObj = {
           embed: {

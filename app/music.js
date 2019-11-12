@@ -91,7 +91,7 @@ module.exports = function(client) {
       }
       else if (cmd){
         try {
-          cmd.process(client, message, query);
+          cmd.process(client, message, query, prefix);
         }
         catch (e) {
           console.log(e);
